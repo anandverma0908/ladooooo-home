@@ -1,0 +1,47 @@
+.s6-bg { background:radial-gradient(ellipse at 50% 30%, #0e0508 0%, #030103 100%); }
+.rain-container { position:absolute; inset:0; pointer-events:none; overflow:hidden; }
+.rain-drop {
+  position:absolute; top:-120px;
+  background:linear-gradient(to bottom, transparent 0%, rgba(160,190,255,0.12) 20%, rgba(190,215,255,0.4) 60%, rgba(200,220,255,0.2) 100%);
+  border-radius:0 0 1px 1px; animation:rain-fall linear infinite; transform-origin:top center;
+}
+@keyframes rain-fall {
+  0%   { transform:translateY(0) rotate(-13deg); opacity:0; }
+  8%   { opacity:1; } 92% { opacity:1; }
+  100% { transform:translateY(115vh) rotate(-13deg); opacity:0; }
+}
+.s6-content {
+  z-index:10; display:flex; flex-direction:column; align-items:center;
+  gap:28px; text-align:center; width:min(500px,90vw);
+  padding:20px;
+}
+.s6-candle-wrap { }
+.s6-text-block { }
+.s6-main-text {
+  font-family:'Playfair Display',serif; font-style:italic;
+  color:rgba(245,237,214,0.9); font-size:clamp(20px,3vw,30px); line-height:1.4;
+}
+.s6-main-text.gold { color:#C9A84C; text-shadow:0 0 30px rgba(201,168,76,0.3); }
+.s6-sub-text { font-family:'Special Elite',serif; color:rgba(201,168,76,0.5); font-size:13px; letter-spacing:2px; margin-top:10px; }
+.s6-lines { display:flex; flex-direction:column; gap:10px; }
+.s6-line {
+  font-family:'Playfair Display',serif; color:rgba(245,237,214,0.7);
+  font-size:clamp(14px,2vw,17px); line-height:1.7;
+}
+.s6-line.italic { font-style:italic; }
+.s6-line.gold-dim { color:rgba(201,168,76,0.65); }
+
+.forgive-btn { font-size:16px; padding:16px 52px; letter-spacing:2px; }
+
+.s6-forgiven-wrap { display:flex; flex-direction:column; align-items:center; gap:14px; }
+.s6-forgiven-text {
+  font-family:'Playfair Display',serif; color:#C9A84C;
+  font-size:clamp(16px,2.5vw,22px); line-height:1.5;
+}
+.s6-forgiven-sub {
+  font-family:'Playfair Display',serif; font-style:italic;
+  color:rgba(245,237,214,0.55); font-size:clamp(13px,1.8vw,15px);
+  letter-spacing:0.3px;
+}
+
+.s6-footer { font-family:'Special Elite',serif; color:rgba(201,168,76,0.3); font-size:12px; letter-spacing:2px; margin-top:10px; }

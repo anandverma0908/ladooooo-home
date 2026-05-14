@@ -1,0 +1,155 @@
+.s1-bg {
+  background: radial-gradient(ellipse at center, #0a0310 0%, #000 100%);
+}
+.s1-vignette {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, transparent 25%, rgba(0,0,0,0.75) 100%);
+  pointer-events: none;
+}
+.s1-center {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 36px; z-index: 10; text-align: center;
+}
+.s1-tagline {
+  color: rgba(245,237,214,0.82);
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(17px, 2.8vw, 26px);
+  font-style: italic;
+  letter-spacing: 0.06em;
+  max-width: 420px;
+  line-height: 1.5;
+}
+
+/* ── Realistic rain ── */
+.rain-container {
+  position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+}
+.rain-drop {
+  position: absolute; top: -120px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(160,190,255,0.15) 20%,
+    rgba(190,215,255,0.55) 60%,
+    rgba(200,220,255,0.3) 100%
+  );
+  border-radius: 0 0 1px 1px;
+  animation: rain-fall linear infinite;
+  transform-origin: top center;
+}
+@keyframes rain-fall {
+  0%   { transform: translateY(0) rotate(var(--slant, -12deg)); opacity: 0; }
+  8%   { opacity: 1; }
+  92%  { opacity: 1; }
+  100% { transform: translateY(115vh) rotate(var(--slant, -12deg)); opacity: 0; }
+}
+
+/* ── Candle ── */
+.candle-wrap { display: flex; flex-direction: column; align-items: center; }
+.candle-clickable { transition: transform 0.2s; }
+.candle-clickable:not(.blown):hover { transform: scale(1.06); filter: brightness(1.12); }
+.candle-clickable:not(.blown):active { transform: scale(0.97); }
+
+.flame {
+  width: 18px; height: 42px;
+  background: radial-gradient(ellipse at 50% 80%, #fff 0%, #FFD700 28%, #FF8C00 58%, transparent 80%);
+  border-radius: 50% 50% 30% 30%;
+  animation: flicker 1.8s ease-in-out infinite alternate;
+  position: relative; filter: blur(0.5px);
+  box-shadow: 0 0 12px 4px rgba(255,180,0,0.35);
+}
+.flame::after {
+  content: ''; position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%);
+  width: 6px; height: 6px; background: #fff; border-radius: 50%; filter: blur(2px);
+}
+@keyframes flicker {
+  0%   { transform: scaleX(1) scaleY(1) rotate(-1deg); opacity: 0.95; }
+  25%  { transform: scaleX(0.9) scaleY(1.07) rotate(1.5deg); }
+  50%  { transform: scaleX(1.05) scaleY(0.96) rotate(-0.5deg); opacity: 1; }
+  75%  { transform: scaleX(0.95) scaleY(1.05) rotate(1deg); }
+  100% { transform: scaleX(1.02) scaleY(0.97) rotate(-1.5deg); opacity: 0.9; }
+}
+.candle-body {
+  width: 26px; height: 84px;
+  background: linear-gradient(to right, #e2d9c8, #f5f0e8 40%, #d8d0be);
+  border-radius: 3px 3px 0 0; position: relative;
+}
+.candle-drip {
+  position: absolute; top: -4px; right: 5px;
+  width: 7px; height: 16px; background: #e8e0d0; border-radius: 0 0 50% 50%;
+}
+.candle-wick {
+  position: absolute; top: -6px; left: 50%; transform: translateX(-50%);
+  width: 2px; height: 8px; background: #333; border-radius: 1px;
+}
+.candle-base { width: 34px; height: 9px; background: var(--gold); border-radius: 2px; }
+
+.glow-ring {
+  position: absolute; width: 140px; height: 140px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,200,50,0.22) 0%, transparent 70%);
+  top: -50px; left: 50%; transform: translateX(-50%); pointer-events: none;
+  animation: glow-pulse 2.5s ease-in-out infinite alternate;
+}
+@keyframes glow-pulse {
+  0%   { opacity: 0.8; transform: translateX(-50%) scale(1); }
+  100% { opacity: 1; transform: translateX(-50%) scale(1.12); }
+}
+
+.blow-hint {
+  margin-top: 10px; font-family: 'Playfair Display', serif;
+  font-size: 11px; letter-spacing: 1.5px;
+  color: rgba(201,168,76,0.5); text-transform: uppercase;
+  animation: hint-pulse 2s ease-in-out infinite;
+}
+@keyframes hint-pulse {
+  0%, 100% { opacity: 0.4; }
+  50%       { opacity: 0.9; }
+}
+
+.smoke-wrap {
+  position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+  pointer-events: none; width: 0; height: 0;
+}
+.smoke-puff {
+  position: absolute; width: 22px; height: 22px;
+  background: radial-gradient(circle, rgba(200,200,200,0.45) 0%, transparent 70%);
+  border-radius: 50%; filter: blur(4px); left: -11px; top: -11px;
+}
+
+/* ── Book reveal on Screen1 ── */
+.s1-book-scene {
+  display: flex; flex-direction: column; align-items: center; gap: 20px; z-index: 10;
+}
+.s1-book-3d {
+  display: flex; position: relative;
+  filter: drop-shadow(0 30px 60px rgba(0,0,0,0.85)) drop-shadow(0 0 40px rgba(201,168,76,0.15));
+  transition: filter 0.4s;
+}
+.s1-book-3d:hover {
+  filter: drop-shadow(0 30px 60px rgba(0,0,0,0.7)) drop-shadow(0 0 60px rgba(201,168,76,0.28));
+}
+.s1-book-spine {
+  width: 22px;
+  background: linear-gradient(to right, #1a0610, #3a0e20, #1a0610);
+  border-radius: 3px 0 0 3px; flex-shrink: 0;
+}
+.s1-book-face {
+  position: relative; overflow: hidden; border-radius: 0 4px 4px 0;
+}
+.s1-book-img {
+  display: block;
+  height: min(520px, 72vh);
+  width: auto;
+  border-radius: 0 4px 4px 0;
+}
+.s1-book-shine {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 50%);
+  pointer-events: none; border-radius: 0 4px 4px 0;
+}
+.s1-book-hint {
+  font-family: 'Playfair Display', serif; font-style: italic;
+  font-size: 13px; letter-spacing: 2px;
+  color: rgba(201,168,76,0.6); text-transform: uppercase;
+  animation: hint-pulse 2s ease-in-out infinite;
+}

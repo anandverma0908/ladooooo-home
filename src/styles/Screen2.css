@@ -1,0 +1,189 @@
+/* ── Background ── */
+.s2-bg {
+  background: radial-gradient(ellipse at 50% 40%, #100818 0%, #04020a 100%);
+}
+.s2-candle-glow {
+  position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 600px; height: 400px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ── Rain ── */
+.rain-container { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.rain-drop {
+  position: absolute; top: -120px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(160,190,255,0.12) 20%,
+    rgba(190,215,255,0.45) 60%,
+    rgba(200,220,255,0.25) 100%
+  );
+  border-radius: 0 0 1px 1px;
+  animation: rain-fall linear infinite;
+  transform-origin: top center;
+}
+@keyframes rain-fall {
+  0%   { transform: translateY(0) rotate(var(--slant, -12deg)); opacity: 0; }
+  8%   { opacity: 1; }
+  92%  { opacity: 1; }
+  100% { transform: translateY(115vh) rotate(var(--slant, -12deg)); opacity: 0; }
+}
+
+/* ── Book wrapper ── */
+.s2-book-wrap {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  padding: 16px; box-sizing: border-box; z-index: 10;
+}
+
+/* ── Two-page book spread ── */
+.book-spread {
+  display: flex;
+  height: min(660px, 92vh);
+  max-width: min(900px, 97vw);
+  width: 100%;
+  border-radius: 2px;
+  box-shadow:
+    0 0 0 1px rgba(139,115,85,0.1),
+    0 8px 40px rgba(0,0,0,0.88),
+    0 24px 80px rgba(0,0,0,0.6),
+    0 0 60px rgba(201,168,76,0.04);
+}
+
+/* ── Left decorative page ── */
+.page-left {
+  width: min(230px, 30vw);
+  flex-shrink: 0;
+  background: linear-gradient(to right, #E0D4BE, #EDE0C4 60%);
+  border-radius: 2px 0 0 2px;
+  border-right: 2px solid rgba(139,115,85,0.2);
+  position: relative; overflow: hidden;
+}
+.page-left::after {
+  content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 10px;
+  background: linear-gradient(to right, transparent, rgba(0,0,0,0.04));
+  pointer-events: none;
+}
+.page-left-inner {
+  height: 100%; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 24px 16px; box-sizing: border-box; position: relative;
+}
+.lw-ornament-top { font-size: 30px; color: #8B7355; margin-bottom: 14px; }
+.lw-quote {
+  font-family: 'Playfair Display', serif; font-style: italic;
+  color: #5C4030; font-size: clamp(10px, 1.4vw, 13px);
+  line-height: 1.9; text-align: center; margin-bottom: 6px;
+}
+.lw-quote-attr {
+  color: #8B7355; font-family: 'Special Elite', serif;
+  font-size: clamp(9px, 1.1vw, 11px); letter-spacing: 1px; text-align: center;
+}
+.pressed-flower { width: 58px; margin: 16px auto; opacity: 0.3; }
+.pressed-flower svg { width: 100%; }
+
+/* Page progress dots */
+.page-dots {
+  display: flex; gap: 5px; margin-top: 14px; flex-wrap: wrap;
+  justify-content: center; max-width: 120px;
+}
+.page-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: rgba(139,115,85,0.25);
+  transition: background 0.4s, transform 0.3s;
+}
+.page-dot.done { background: rgba(139,115,85,0.5); }
+.page-dot.active {
+  background: #C9A84C; transform: scale(1.4);
+}
+
+.page-num-left {
+  position: absolute; bottom: 14px;
+  font-family: 'Playfair Display', serif; font-style: italic;
+  color: rgba(139,115,85,0.6); font-size: 11px; letter-spacing: 0.5px;
+}
+
+/* ── Right page — 3D flip container ── */
+.page-right-perspective {
+  flex: 1; min-width: 0;
+  position: relative;
+  perspective: 1800px;
+  background: #EDE0C4;
+  border-radius: 0 2px 2px 0;
+}
+.page-back-paper {
+  position: absolute; inset: 0;
+  background: linear-gradient(to left, #EEE4CE, #EDE0C4 50%);
+  border-radius: 0 2px 2px 0;
+}
+
+/* The flipping page */
+.page-right {
+  position: absolute; inset: 0;
+  background: linear-gradient(to left, #FAF4E8, #F6EDD8 40%, #EEE6D0);
+  border-radius: 0 2px 2px 0;
+  padding: 24px 24px 52px;
+  box-sizing: border-box;
+  display: flex; flex-direction: column;
+  overflow: hidden;
+}
+.page-right::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none; border-radius: 0 2px 2px 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23EDE0C4'/%3E%3Ccircle cx='2' cy='2' r='0.5' fill='%23C9A84C' opacity='0.06'/%3E%3C/svg%3E");
+  opacity: 0.6;
+}
+.page-right::after {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 20px;
+  background: linear-gradient(to right, rgba(0,0,0,0.07), transparent);
+  pointer-events: none;
+}
+
+/* Chapter heading */
+.chapter-heading {
+  font-family: 'Playfair Display', serif; font-style: italic;
+  font-size: clamp(11px, 1.5vw, 13px);
+  color: #8B7355; letter-spacing: 0.5px;
+  margin-bottom: 14px;
+  border-bottom: 0.5px solid rgba(139,115,85,0.25); padding-bottom: 8px;
+  flex-shrink: 0; position: relative; z-index: 1;
+}
+
+/* Poem text */
+.letter-content {
+  flex: 1; overflow: hidden;
+  font-family: 'Caveat', cursive; color: #2C1810;
+  font-size: clamp(13px, 1.9vw, 15px); line-height: 1.8;
+  position: relative; z-index: 1;
+}
+.letter-line { min-height: 1.4em; margin: 0; }
+.letter-line.empty-line { min-height: 0.55em; }
+.letter-line.salutation { font-size: 1.08em; font-weight: 700; color: #4A1020; }
+.letter-line.sign-off { font-style: italic; color: #6B3020; }
+
+.typewriter-cursor {
+  display: inline-block; color: #4A1020;
+  animation: blink 0.7s step-end infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+/* Page number */
+.page-num-right {
+  position: absolute; bottom: 14px; right: 16px;
+  font-family: 'Playfair Display', serif; font-style: italic;
+  color: rgba(139,115,85,0.6); font-size: 11px; z-index: 2;
+}
+
+/* Page corner curl */
+.page-corner-curl {
+  position: absolute; bottom: 0; right: 0;
+  width: 30px; height: 30px;
+  background: conic-gradient(from 180deg at 100% 100%, rgba(139,115,85,0.2), transparent 45deg);
+  animation: curl-pulse 2.5s ease-in-out infinite; z-index: 2;
+}
+@keyframes curl-pulse { 0%,100%{opacity:0.35} 50%{opacity:0.9} }
+
+.next-btn-wrap {
+  position: absolute; bottom: 16px; right: 16px; z-index: 5;
+}
