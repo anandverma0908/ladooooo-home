@@ -19,22 +19,36 @@ export default function App() {
   const bgMusicRef = useRef(null)
 
   useEffect(() => {
-    bgMusicRef.current = new Audio('/music/background.mp3')
-    bgMusicRef.current.loop = true
-    bgMusicRef.current.volume = 0.25
+    const audio = new Audio('/music/background.mp3')
+    audio.loop = true
+    audio.volume = 0.25
+    bgMusicRef.current = audio
 
-    // Try autoplay immediately; if browser blocks it, start on first interaction
-    bgMusicRef.current.play().catch(() => {
-      const tryPlay = () => {
-        bgMusicRef.current.play().catch(() => {})
-        document.removeEventListener('click', tryPlay)
-        document.removeEventListener('touchstart', tryPlay)
-      }
-      document.addEventListener('click', tryPlay, { once: true })
-      document.addEventListener('touchstart', tryPlay, { once: true })
-    })
+    const tryPlay = () => {
+      audio.play().catch(() => {})
+    }
 
-    return () => bgMusicRef.current?.pause()
+    // Browsers require a user gesture before audio can play
+    const unlock = () => {
+      tryPlay()
+      document.removeEventListener('click', unlock)
+      document.removeEventListener('touchstart', unlock)
+      document.removeEventListener('keydown', unlock)
+    }
+
+    document.addEventListener('click', unlock)
+    document.addEventListener('touchstart', unlock)
+    document.addEventListener('keydown', unlock)
+
+    // Attempt immediate play (works on desktop without gesture)
+    tryPlay()
+
+    return () => {
+      audio.pause()
+      document.removeEventListener('click', unlock)
+      document.removeEventListener('touchstart', unlock)
+      document.removeEventListener('keydown', unlock)
+    }
   }, [])
 
   useEffect(() => {
